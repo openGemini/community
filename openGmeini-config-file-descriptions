@@ -1,0 +1,463 @@
+[common]
+  # meta-join is the addresses which sql and store communicate with meta
+  # sql和store与meta内部通信的监听地址
+  meta-join = ["{{meta_addr_1}}:8092", "{{meta_addr_2}}:8092", "{{meta_addr_3}}:8092"]
+  
+  # These are query control configs, and default is off
+  # 查询限制内存大小相关配置，默认关闭
+  # executor-memory-size-limit = "0"
+  # executor-memory-wait-time = "0s"
+  
+  # Determines whether the pprof endpoint is enabled.  This endpoint is used for 
+  # troubleshooting and monitoring.
+  # GoLang程序性能分析工具，可用于cpu、内存分析
+  # pprof-enabled = false
+  
+  # Determines system configs
+  # 系统参数
+  # cpu-num = 0
+  # memory-size = "0"
+
+[meta]
+  # Bind address to use for the RPC service for backup and restore.
+  # meta之间raft通信的地址
+  bind-address = "{{addr}}:8088"
+  
+  # Http bind address is use to get some information about meta
+  # meta提供给用户获取meta元数据信息的调试接口
+  http-bind-address = "{{addr}}:8091"
+  
+  # RPC bind address to use for the RPC service for sql and store.
+  # meta服务提供的内部监听地址
+  rpc-bind-address = "{{addr}}:8092"
+  
+  # Where the metadata/raft database is stored
+  # meta保存元数据的目录
+  dir = "/tmp/openGemini/data/meta/{{id}}"
+  
+  # Automatically create a default retention policy when creating a database.
+  # 在创建database的时候是否默认创建retention policy
+  # retention-autocreate = true
+  
+  # ElectionTimeout specifies the time in candidate state without contact
+  # from a leader before we attempt an election.
+  # meta raft选主超时时间
+  # election-timeout = "1s"
+  
+  # meta raft心跳超时时间
+  # heartbeat-timeout = "1s"
+  
+  # LeaderLeaseTimeout is used to control how long the "lease" lasts
+  # for being the leader without being able to contact a quorum
+  # of nodes. If we reach this interval without contact, we will
+  # step down as leader.
+  # meta raft leader租约超时时间
+  # leader-lease-timeout = "500ms"
+  
+  # CommitTimeout controls the time without an Apply() operation
+  # before we heartbeat to ensure a timely commit. Due to random
+  # staggering, may be delayed as much as 2x this value. 
+  # commit-timeout = "50ms"
+  
+  # Whether to trace raft logs
+  # 是否记录raft日志
+  # cluster-tracing = true
+  
+  # Whether to trace meta logs
+  # 是否开启meta日志功能
+  # logging-enabled = true
+  
+  # lease-duration = "1m0s"
+  
+  # Determines the version of meta, used when meta is changed
+  # meta版本号，升级时使用
+  # meta-version = 2
+  
+  # Determines whether HTTPS is enabled on meta service.
+  # meta服务是否支持https。meta具备一些调试功能。
+  # https-enabled = false
+  
+  # The SSL certificate to use when HTTPS is enabled on meta service.
+  # 当meta服务开启https时，ssl证书路径
+  # https-certificate = ""
+  
+  # Use a separate private key location on meta service.
+  # meta服务私钥文件路径
+  # https-private-key = ""
+
+[coordinator]
+  # The default time a write request will wait until a "timeout" error is returned to the caller.
+  # 写入超时时间
+  # write-timeout = "120s"
+  
+  # The default time the sql write request will wait until a "timeout" error is returned by the store.
+  # sql向store写入超时时间
+  # shard-writer-timeout = "120s"
+  
+  # The maximum time a query will is allowed to execute before being killed by the system.  This limit
+  # can help prevent run away queries.  Setting the value to 0 disables the limit.
+  # 查询等待超时时间
+  # shard-mapper-timeout = "3000m"
+  
+  # Data store model,support warm and hot
+  # 数据存储模式，支持warm和hot两种类型，warm为磁盘模式，hot为全内存模式
+  # shard-tier = "warm"
+  
+  # Limit the retention policy nums
+  # 该参数可以限制rp个数
+  # rp-limit = 100
+  
+  # Determines the use of hint function
+  # 开启hint功能。如果查询条件能够精确匹配到时间线，可以开启该功能，加速查询性能
+  # force-broadcast-query = false
+
+[http]
+  # The bind address used by the HTTP service.
+  # sql进程提供对外服务的地址
+  bind-address = "{{addr}}:8086"
+  
+  # Determines whether user authentication is enabled over HTTP/HTTPS.
+  # 是否开启用户认证
+  # auth-enabled = false
+  
+  # Weak passwords which is provided by the user
+  # 弱密码配置文件
+  # weakpwd-path = "/tmp/openGemini/weakpasswd.properties"
+  
+  # The maximum number of HTTP connections that may be open at once.  New connections that
+  # would exceed this limit are dropped.  Setting this value to 0 disables the limit.
+  # http服务端可以提供的最大连接数
+  # max-connection-limit = 0
+  
+  # The maximum number of writes processed concurrently.
+  # Setting this to 0 disables the limit.
+  # http服务端可以提供的最大写连接数
+  # max-concurrent-write-limit = 0
+  
+  # The maximum number of writes queued for processing.
+  # Setting this to 0 disables the limit.
+  # http服务端可以提供的最大写排队数
+  # max-enqueued-write-limit = 0
+  
+  # The maximum duration for a write to wait in the queue to be processed.
+  # Setting this to 0 or setting max-concurrent-write-limit to 0 disables the limit.
+  # http服务端写排队的超时时间
+  # enqueued-write-timeout = "10m"
+  
+  # The maximum number of queries processed concurrently.
+  # Setting this to 0 disables the limit.
+  # http服务端可以提供的最大查询连接数
+  # max-concurrent-query-limit = 0
+  
+  # The maximum number of queries queued for processing.
+  # Setting this to 0 disables the limit.
+  # http服务端可以提供的最大查询排队数
+  # max-enqueued-query-limit = 0
+  
+  # The maximum duration for a query to wait in the queue to be processed.
+  # Setting this to 0 or setting max-concurrent-query-limit to 0 disables the limit.
+  # http服务端写排队的超时时间
+  # enqueued-query-timeout = "5m"
+  
+  # chunk-reader-parallel = 0
+  
+  # The maximum size of a client request body, in bytes. Setting this value to 0 disables the limit.
+  # http服务端返回的body最大值，设置为0则不限制
+  # max-body-size = 0
+  
+  # Determines whether HTTPS is enabled.
+  # 是否支持https
+  # https-enabled = false
+  
+  # The SSL certificate to use when HTTPS is enabled.
+  # 当开启https时，ssl证书路径
+  # https-certificate = ""
+  
+  # Use a separate private key location.
+  # 私钥文件路径
+  # https-private-key = ""
+
+[data]
+  # The address provided by store when sql writes data into
+  # sql向store写入数据的地址
+  store-ingest-addr = "{{addr}}:8400"
+  
+  # The address provided by store when sql sends a query
+  # sql向store查询数据的地址
+  store-select-addr = "{{addr}}:8401"
+  
+  # The directory where the TSSP storage engine stores TSSP files.
+  # 存储tssp文件的路径
+  store-data-dir = "/tmp/openGemini/data/{{id}}"
+  
+  # The directory where the TSSP storage engine stores WAL files.
+  # 存储wal文件的路径
+  store-wal-dir = "/tmp/openGemini/data/{{id}}"
+  
+  # The directory where storage engine stores meta files, like nodeid
+  # 存储store的元数据路径，存储内存例如node id
+  store-meta-dir = "/tmp/openGemini/data/meta/{{id}}"
+  
+  # Determines whether WAL is enabled.
+  # 是否开启WAL功能
+  # wal-enabled = true
+  
+  # The amount of time that a write will wait before fsyncing.  A duration
+  # greater than 0 can be used to batch up multiple fsync calls.  This is useful for slower
+  # disks or when WAL write contention is seen.  A value of 0s fsyncs every write to the WAL.
+  # Values in the range of 0-100ms are recommended for non-SSD disks.
+  # wal缓存数据刷盘时间间隔
+  # wal-sync-interval = "100ms"
+  
+  # Determines whether WAL is parallel replayed when open.
+  # 启动时是否并发恢复wal数据
+  # wal-replay-parallel = false
+  
+  # The max inmem percent of immutable
+  # imm-table-max-memory-percentage = 10
+  
+  # WriteColdDuration is the length of time at
+  # which the engine will snapshot the cache and write it to
+  # a new TSSP file if the shard hasn't received writes or deletes
+  # write-cold-duration = "5s"
+  
+  # ShardMutableSizeLimit is the size at which the engine will
+  # snapshot a shard's cache and write it to a TSSP file, freeing up memory
+  # Valid size suffixes are k, m, or g (case insensitive, 1024 = 1k).
+  # Values without a size suffix are in bytes.
+  # shard-mutable-size-limit = "60m"
+  
+  # NodeMutableSizeLimit is the size at which the engine will
+  # snapshot all shards cache and write it to a TSSP file, freeing up memory
+  # Valid size suffixes are k, m, or g (case insensitive, 1024 = 1k).
+  # Values without a size suffix are in bytes.
+  # node-mutable-size-limit = "200m"
+  
+  # The max time a write process can wait
+  # max-write-hang-time = "3s"
+  
+  # Determines the max concurrent compactions
+  # max-concurrent-compactions = 4
+  
+  # CompactFullWriteColdDuration is the duration at which the engine
+  # will compact all TSSP files in a shard if it hasn't received a
+  # write or delete
+  # compact-full-write-cold-duration = "1h"
+  
+  # Determines the max concurrent full compactions
+  # max-full-compactions = 1
+  
+  # CompactThroughput is the rate limit in bytes per second that we
+  # will allow TSSP compactions to write to disk. Note that short bursts are allowed
+  # to happen at a possibly larger value, set by CompactThroughputBurst
+  # compact刷盘带宽
+  # compact-throughput = "80m"
+  
+  # CompactThroughputBurst is the rate limit in bytes per second that we
+  # will allow TSSP compactions to write to disk.
+  # compact刷盘带宽
+  # compact-throughput-burst = "90m"
+  
+  # Determines whether recovery panic when compacting
+  # compact失败是否不会panic
+  # compact-recovery = false
+  
+  # SnapshotThroughput is the rate limit in bytes per second that we
+  # will allow cache snapshots to write to disk. Note that short bursts are allowed
+  # to happen at a possibly larger value, set by SnapshotThroughputBurst
+  # cache刷盘带宽
+  # snapshot-throughput = "64m"
+  
+  # SnapshotThroughputBurst is the rate limit in bytes per second that we
+  # will allow cache snapshots to write to disk.
+  # cache刷盘带宽
+  # snapshot-throughput-burst = "70m"
+  
+  # Whether to cache data blocks in hot shard
+  cache-table-data-block = false
+  # Whether to cache meta blocks in hot shard
+  cache-table-meta-block = false
+  # Whether to use mmap ability
+  # 是否开启mmap功能
+  enable-mmap-read = false
+  
+  # The limit of read cache use size, The unit is byte, less than or equal to 0 is unused, recommend 5368709120 if use
+  # 读缓存大小，0表示不使用，可以根据规格进行配置
+  read-cache-limit = 0
+  
+  # Determines the concurrent limit when sql writes to store
+  # sql向store写入的并发数限制
+  # write-concurrent-limit = 0
+  
+  # Determines whether the database is read only, and write is not allowed
+  # 设置数据库系统是否只读
+  # readonly = false
+
+[logging]
+  # Determines which log encoder to use for logs. Available options
+  # are auto, logfmt, and json. auto will use a more a more user-friendly
+  # output format if the output terminal is a TTY, but the format is not as
+  # easily machine-readable. When the output is a non-TTY, auto will use logfmt.
+  # 
+  # format = "auto"
+  
+  # Determines which level of logs will be emitted. The available levels
+  # are error, warn, info, and debug. Logs that are equal to or above the
+  # specified level will be emitted.
+  # 日志打印级别
+  # level = "info"
+  
+  # The logs store path
+  # 日志保存路径
+  path = "/tmp/openGemini/logs/{{id}}"
+  
+  # The max size of a log file
+  # 单个日志文件的最大值
+  # max-size = "256m"
+  
+  # The max num of logs
+  # 日志文件的最大备份数量
+  # max-num = 16
+  
+  # The max time a log file stores
+  # 日志文件保留最长时间
+  # max-age = 7
+  
+  # Determines whether to compress log files
+  # 是否开启日志压缩功能
+  # compress-enabled = true
+
+[tls]
+  # Minimum version of the tls protocol that will be negotiated. If not specified, uses the
+  # default settings from Go's crypto/tls package.
+  # min-version = "TLS1.2"
+  
+  # Determines the available set of cipher suites. See https://golang.org/pkg/crypto/tls/#pkg-constants
+  # for a list of available ciphers, which depends on the version of Go (use the query
+  # SHOW DIAGNOSTICS to see the version of Go used to build InfluxDB). If not specified, uses
+  # the default settings from Go's crypto/tls package.
+  # ciphers = [
+    # "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+    # "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+    # "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+    # "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+  # ]
+
+[monitor]
+  # Determines monitor method, provided "http","file" or "http|file"
+  # 监控使用方式
+  # 1、使用"http"方式，需要配置"http-endpoint"
+  # 2、使用"file"方式，需要配置"store-path"，并且配置ts-monitor使用
+  # 3、使用"http"+"file"两种方式
+  # pushers = ""
+  # store-enabled = false
+  # store-database = "_internal"
+  # store-interval = "10s"
+  # store-path = "/tmp/openGemini/metric/{{id}/metric.data"
+  # compress = false
+  # http-endpoint = "{{addr}}:8086"
+
+[gossip]
+  # 是否开启故障检测
+  # enabled = true
+  # log-enabled = true
+  # 绑定地址
+  bind-address = "{{addr}}"
+  # 绑定端口，提供给store使用
+  store-bind-port = 8011
+  # 绑定端口，提供给meta使用
+  meta-bind-port = 8010
+  
+  # 检测周期
+  # prob-interval = '1s'
+  
+  # SuspicionMult is the multiplier for determining the time an
+  # inaccessible node is considered suspect before declaring it dead.
+  # The actual timeout is calculated using the formula:
+  #
+  #   SuspicionTimeout = SuspicionMult * log(N+1) * ProbeInterval
+  #
+  # This allows the timeout to scale properly with expected propagation
+  # delay with a larger cluster size. The higher the multiplier, the longer
+  # an inaccessible node is considered part of the cluster before declaring
+  # it dead, giving that suspect node more time to refute if it is indeed
+  # still alive.
+  # suspicion-mult = 4
+  
+  # Join is used to take an existing Memberlist and attempt to join a cluster
+  # by contacting all the given hosts and performing a state sync. Initially,
+  # the Memberlist only contains our own state, so doing this will cause
+  # remote nodes to become aware of the existence of this node, effectively
+  # joining the cluster.
+  #
+  # This returns the number of hosts successfully contacted and an error if
+  # none could be reached. If an error is returned, the node did not successfully
+  # join the cluster.
+  members = ["{{meta_addr_1}}:8010", "{{meta_addr_2}}:8010", "{{meta_addr_3}}:8010"]
+
+[spdy]
+# TCP connection pool size, which controls the number of TCP connections
+  # established between two nodes.
+  # TCP连接池大小，控制两个节点之间建立的TCP链接数量
+  # conn-pool-size = 4
+
+  # Maximum number of concurrent sessions per TCP connection
+  # 每个TCP链接最大并发会话数
+  # concurrent-accept-session = 4096
+  
+  # Size of the message buffer window for each session
+  # 每个会话消息缓冲窗口大小
+  # recv-window-size = 8
+  
+  # Timeout interval for creating a session, which is used by the client.
+  # 创建会话的超时时间，主动发起会话创建的一方（客户端）
+  # open-session-timeout = "5m"
+  
+  # Timeout interval for a session to wait for data.
+  # 会话等待数据的超时时间
+  # session-select-timeout = "5m"
+  
+  # Data confirmation timeout interval
+  # 数据确认超时时间
+  # data-ack-timeout = "10s"
+  
+  # Timeout interval for creating a TCP connection
+  # 创建TCP链接的超时时间
+  # tcp-dial-timeout = "10s"
+  
+  # TLS switch
+  # TLS开关
+  # tls-enable = false
+  
+  # Skip TLS verification
+  # Set this parameter to false in the production environment.
+  # 跳过TLS校验（生产环境请配置为false）
+  # tls-insecure-skip-verify = false
+  
+  # two-way authentication switch
+  # 双向认证开关
+  # tls-client-auth = false
+  
+  # Server certificate
+  # 服务端的证书
+  # tls-certificate = ""
+  
+  # Server key
+  # 服务端密钥
+  # tls-private-key = ""
+  
+  # Reference tls.Config.ServerName
+  # 参考 tls.Config.ServerName
+  # tls-server-name = ""
+  
+  # Client certificate (required when two-way authentication is enabled)
+  # 客户端证书（开启双向认证时需要配置）
+  # tls-client-certificate = ""
+  
+  # Client key (required when two-way authentication is enabled)
+  # 客户端密钥（开启双向认证时需要配置）
+  # tls-client-private-key = ""
+  
+  # Root certificate (required when two-way authentication is enabled)
+  # 根证书（开启双向认证时需要配置）
+  # tls-ca-root = ""
