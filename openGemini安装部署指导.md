@@ -1,8 +1,11 @@
 为帮助大家正确使用openGemini，本文内容整理于B站openGemini视频教程第一课《openGemini集群部署和监控》，并在此基础上对openGemini端口、配置文件等常见问题进行详细说明。
+![1](https://user-images.githubusercontent.com/49023462/200799881-9cde59bf-f632-4fb8-af8c-0a4b1b10b438.png)
 
 关于openGemini的任何问题，可以在社区openGemini Q&A Issue中和我们交流！我们也会将收集的Q&A在这里面进行发布。
+![2](https://user-images.githubusercontent.com/49023462/200800054-59771bb5-2b65-4c0b-89e6-c6d46640d50c.png)
 
 ## 端口说明
+![3](https://user-images.githubusercontent.com/49023462/200800239-63c53229-b7df-41eb-9504-ec1f4b558173.png)
 
 端口说明如下表所示：
 <table>
@@ -84,6 +87,7 @@ ts-server为openGemini的单机版二进制文件，可简单理解为ts-server�
 若要让集群监听本机IP，让外部节点可以访问，配置上相对要复杂一点，虽然可行，但不推荐。同样以部署1个ts-sql、3个ts-meta和2个ts-store组成的集群为例。
 1.	分配端口
 所有节点均监听本机IP地址，如192.168.0.1，所以所有组件之间不能使用相同的端口，需重新分配。可以做如下分配（参考）：
+![4](https://user-images.githubusercontent.com/49023462/200800373-65a3ac6c-f38d-46ed-86d6-8b8f21232d50.png)
 
 2.	配置文件修改
 openGemini只有一个集群配置文件openGemini.conf，我们进行集群配置时，如果在一个节点上只部署一个ts-meta、一个ts-sql和一个ts-store，或者其中两个或一个，不存在相同组件部署在同一个节点上。则可以考虑在该节点上所有组件共用一个配置文件openGemini.conf
@@ -235,6 +239,7 @@ nohup build/ts-meta -config config/meta-1.conf -pidfile /path/openGemini/pid/met
 
 目前还没有开发集群部署的自动化脚本，只能手动部署，欢迎感兴趣的童鞋到社区贡献!
 openGemini集群部署如图所示，集群有ts-meta(3x), ts-sql(2x), ts-store(2x)：
+![5](https://user-images.githubusercontent.com/49023462/200800488-5683ecc2-e06b-4b65-a8ca-33b3bceaf6e4.jpg)
 
 这种部署方式，不存在两个相同组件被部署在同一个节点之上，没有端口竞争，则可以让同一个节点上的所有组件共用一个配置文件。
 以Node1：192.168.0.1为例，仅需修改配置文件openGemini.conf如下内容：
@@ -292,6 +297,7 @@ members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 以扩ts-store组件为例，按部署方式可分为三种情况：
 1.	新增组件ts-store部署在已有节点上，该节点已存在ts-store组件，这种情况下，ts-store的各个端口需要重新分配。
 部署方式如图所示：
+![6](https://user-images.githubusercontent.com/49023462/200800553-73d0bb25-de2c-4cf2-b401-8d8ddb00ded2.png)
 
 为新增节点单独准备配置文件，具体配置如下：
 ```
@@ -317,6 +323,7 @@ members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 ```
 2.	新增组件ts-store部署在已有节点上，该节点无ts-store组件，这种情况下，不需要重新分配端口，除非端口被其他应用程序占用。
 部署方式如图所示：
+![7](https://user-images.githubusercontent.com/49023462/200800580-2d1b0f70-fb89-42bd-864f-29da12cd3336.png)
 
 可以该节点其他组件共用同一个配置文件，只需修改ts-store对应的配置项即可(IP和目录)
 ```
@@ -338,6 +345,7 @@ members = ["192.168.0.1:8010", "192.168.0.2:8010", "192.168.0.3:8010"]
 ```
 3.	新增组件ts-store部署在新节点上，该节点无ts-store组件，这种情况下，不需要重新分配端口，除非端口被其他应用程序占用。
 部署方式如图所示：
+![8](https://user-images.githubusercontent.com/49023462/200800601-896711db-17ee-45c5-8cee-1b9f4d342e63.png)
 
 配置文件的配置与第二种情况一样
 ```
