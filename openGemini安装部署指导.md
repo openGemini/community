@@ -238,7 +238,8 @@ nohup build/ts-meta -config config/meta-1.conf -pidfile /path/openGemini/pid/met
 ### 部署集群
 
 目前还没有开发集群部署的自动化脚本，只能手动部署，欢迎感兴趣的童鞋到社区贡献!
-openGemini集群部署如图所示，集群有ts-meta(3x), ts-sql(2x), ts-store(2x)：
+openGemini集群部署如图所示，集群有ts-meta(3x), ts-sql(2x), ts-store(2x)：  
+
 ![5](https://user-images.githubusercontent.com/49023462/200800488-5683ecc2-e06b-4b65-a8ca-33b3bceaf6e4.jpg)
 
 这种部署方式，不存在两个相同组件被部署在同一个节点之上，没有端口竞争，则可以让同一个节点上的所有组件共用一个配置文件。
