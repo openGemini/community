@@ -134,7 +134,7 @@ Grafana的安装略
 
 1. 登录Grafana，添加数据源（data source），因为openGemini兼容InfluxDB，这里可以选择InfluxDB
 
-   ![](/Users/xiangyu/Documents/pages/images/grafana-1.png)
+   ![](./images/grafana-1.png)
 
 2. 填写图中红框部分
 
@@ -144,9 +144,9 @@ Grafana的安装略
 
    database：需要访问的数据库，该库保存了监控数据。
 
-   ![](/Users/xiangyu/Documents/pages/images/grafana-2.png)
+   ![](./images/grafana-2.png)
 
 3. 看版样例
 
-   ![](/Users/xiangyu/Documents/pages/images/grafana-3.png)
+   ![](./images/grafana-3.png)
 
