@@ -165,7 +165,7 @@ openGemini-casto架适用于流式数据检测，即连续接受新的数据点�
 
    ```yaml
    ValueChangeAD:
-   	# 不可配置
+   # 不可配置  
        window: 1
    ```
 
@@ -254,10 +254,10 @@ openGemini-casto架适用于流式数据检测，即连续接受新的数据点�
    # suppressor for ThresholdAD anomaly detector
    ThresholdAD:
      TransientAnomalySuppressor:
-       window: 5
-   	anomalies: 2
+         window: 5  
+         anomalies: 2  
      ContinuousAnomalySuppressor:
-   	gap: "30T"
+     gap: "30T"
    ```
 
 2. 除了特定的检测器，其余的会使用通用告警抑制器
