@@ -27,7 +27,7 @@ LF Edge eKuiper 是 Golang 实现的轻量级物联网边缘分析、流式处�
 ### 1. KubeEdge安装
 参考 [https://kubeedge.io/en/docs/setup/keadm/](https://kubeedge.io/en/docs/setup/keadm/)，根据以往经验，尽量避免离线安装。
 ### 2. Kuiper安装
-以Docker方式让 Kuiper 运行在边缘侧，参考：[https://ekuiper.org/docs/zh/latest/quick_start_docker.html](https://ekuiper.org/docs/zh/latest/quick_start_docker.html)
+以Docker方式让 Kuiper 运行在边缘侧，参考：[https://ekuiper.org/docs/zh/latest/quick_start_docker.html](https://ekuiper.org/docs/zh/latest/quick_start_docker.html)  
 注意事项：将步骤2中MQTT_SOURCE__DEFAULT__SERVER 的值按实际情况修改，配置为 KubeEdge MQTT broker
 ### 3. 安装Kuiper InfluxDB插件
 参考[https://ekuiper.org/docs/zh/latest/rules/sinks/plugin/influx.html](https://ekuiper.org/docs/zh/latest/rules/sinks/plugin/influx.html)
@@ -57,5 +57,7 @@ influxRule 规则配置示例：
 }
 ```
 ### 4. openGemini部署
-openGemini部署到边缘的方式和普通的容器化部署方式大致是相同，差异点在于，边缘侧支持域名访问需要部署 EdgeMesh ，
-详情参考：[https://edgemesh.netlify.app/guide/](https://edgemesh.netlify.app/guide/) 和 [https://github.com/openGemini/openGemini/blob/main/docker/README.md](https://github.com/openGemini/openGemini/blob/main/docker/README.md)
+openGemini部署到边缘的方式和普通的容器化部署方式大致是相同，差异点在于，边缘侧支持域名访问需要部署 EdgeMesh  
+详情参考：
+EdgeMesh部署指南 [https://edgemesh.netlify.app/guide/](https://edgemesh.netlify.app/guide/) 
+openGemini容器化部署指南 [https://github.com/openGemini/openGemini/blob/main/docker/README.md](https://github.com/openGemini/openGemini/blob/main/docker/README.md)
