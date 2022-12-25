@@ -23,7 +23,9 @@ LF Edge eKuiper 是 Golang 实现的轻量级物联网边缘分析、流式处�
 -	支持基于SQL的规则逻辑，用于清洗数据
 -	支持多种Sink，并支持插件的方式扩展Sink
 ## 解决方案架构
-[!img]()
+
+<img src="./images/arch.png">
+
 ## 安装部署
 ### 1. KubeEdge安装
 参考 [https://kubeedge.io/en/docs/setup/keadm/](https://kubeedge.io/en/docs/setup/keadm/)，根据以往经验，尽量避免离线安装。
