@@ -46,7 +46,7 @@ openGemini：集群部署，负责数据高效写入和查询，提供横向扩�
 
 ## 安装部署
 ### 1. KubeEdge安装
-参考 [https://kubeedge.io/en/docs/setup/keadm/](https://kubeedge.io/en/docs/setup/keadm/)，根据以往经验，尽量避免离线安装。
+参考 [https://kubeedge.io/en/docs/setup/keadm/](https://kubeedge.io/en/docs/setup/keadm/)，请采用在线安装，不推荐离线安装。
 ### 2. Kuiper安装
 以Docker方式让 Kuiper 运行在边缘侧，参考：[https://ekuiper.org/docs/zh/latest/quick_start_docker.html](https://ekuiper.org/docs/zh/latest/quick_start_docker.html)  
 注意事项：将步骤2中MQTT_SOURCE__DEFAULT__SERVER 的值按实际情况修改，配置为 KubeEdge MQTT broker
