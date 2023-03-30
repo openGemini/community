@@ -38,7 +38,7 @@ http-endpoint：监控节点上部署的单机openGemini的监听地址和端口
 
 ## 方式二：指标数据通过ts-monitor采集并push到外部监控节点
 
-![](/Users/xiangyu/Documents/pages/images/ts-monitor.png)
+![](images/ts-monitor.png)
 
 如上图所示，内核产生监控日志log Files，然后通过ts-monitor采集并上报到监控节点。
 
