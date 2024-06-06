@@ -7,7 +7,7 @@ This governance explains how the project is run.
 - [Maintainers](#maintainers)
 - [Becoming a Maintainer](#becoming-a-maintainer)
 - [Committers](#committers)
-- [Becoming a Committers](#becoming-a-committers)
+- [Becoming a Committer](#becoming-a-committer)
 - [Meetings](#meetings)
 - [openGemini & CNCF](#opengemini-and-cncf)
 - [Code of Conduct](#code-of-conduct)
@@ -57,13 +57,13 @@ A new Maintainer must be proposed by at least two existing maintainer by sending
 
 openGemini Committers have write access to the corresponding project GitHub repository. They can merge the patches from others. A Committer need to review code to maintain/improve code quality, confirming and handling PR Review requests from community members, approving relevant code contributions to be merged into the main branch and making long-term contributions while guiding other community Contributors/members to contribute to the project.
 
-### Becoming a Committers
+### Becoming a Committer
 
-To become a Maintainer you need to demonstrate the following:
+To become a Committer you need to demonstrate the following:
 
-- Recommended by at least 2 maintainers
-- Review of PRs  or Code review for at least 3 months
-- Continuous contribution to the community for at least 6 months
+- recommended by at least 2 maintainers,
+- review of PRs  or code review for at least 3 months,
+- continuous contribution to the community for at least 6 months,
 - ability to write quality code and/or documentation,
 - ability to collaborate with the team,
 - understanding of how the team works (policies, processes for testing and code review, etc),
